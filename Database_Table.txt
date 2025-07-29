@@ -1,0 +1,185 @@
+1.User Management module
+
+ Table:- Users
+   
+| Column      | Type        | Description          |
+| ----------- | ----------- | -------------------- |
+| id          | BIGINT (PK) | Unique user ID       |
+| name        | VARCHAR     | Full name            |
+| email       | VARCHAR     | Unique login         |
+| password    | VARCHAR     | Encrypted password   |
+| phone       | VARCHAR     | Contact number       |
+| role        | ENUM        | BUYER, SELLER, ADMIN |
+| created\_at | TIMESTAMP   | Registered date      |
+	
+
+
+2.Category Module 
+
+Table :- categories
+ | Column     | Type        | Description                        |
+| ---------- | ----------- | ---------------------------------- |
+| id         | BIGINT (PK) | Category ID                        |
+| name       | VARCHAR     | Category name                      |
+| parent\_id | BIGINT (FK) | Self-reference (for subcategories) |
+
+
+3.Product Management Module
+
+Table :- products
+ 
+| Column       | Type        | Description               |
+| ------------ | ----------- | ------------------------- |
+| id           | BIGINT (PK) | Product ID                |
+| name         | VARCHAR     | Product name              |
+| description  | TEXT        | Detailed info             |
+| price        | DECIMAL     | Product price             |
+| stock\_qty   | INT         | Quantity in stock         |
+| is\_visible  | BOOLEAN     | Show/hide product         |
+| category\_id | BIGINT (FK) | Belongs to category       |
+| seller\_id   | BIGINT (FK) | Seller from `users` table |
+| created\_at  | TIMESTAMP   | Added on                  |
+
+
+4.Product Tags System
+
+Table:- tags
+| Column | Type        | Description           |
+| ------ | ----------- | --------------------- |
+| id     | BIGINT (PK) | Tag ID                |
+| name   | VARCHAR     | Tag name (e.g., Red)  |
+| type   | VARCHAR     | COLOR, SIZE, BRAND... |
+
+
+Table:- product_tags(join table)
+	
+| Column      | Type        | Description             |
+| ----------- | ----------- | ----------------------- |
+| product\_id | BIGINT (FK) | Refers to `products.id` |
+| tag\_id     | BIGINT (FK) | Refers to `tags.id`     |
+
+
+
+5.Cart System
+
+Table :- carts
+
+| Column   | Type        | Description     |
+| -------- | ----------- | --------------- |
+| id       | BIGINT (PK) | Cart ID         |
+| user\_id | BIGINT (FK) | Belongs to user |
+
+
+Table: cart_items
+
+| Column      | Type        | Description           |
+| ----------- | ----------- | --------------------- |
+| id          | BIGINT (PK) | Row ID                |
+| cart\_id    | BIGINT (FK) | Belongs to a cart     |
+| product\_id | BIGINT (FK) | Product added to cart |
+| quantity    | INT         | How many              |
+
+
+ 6. Orders & Payments
+
+Table: orders
+
+| Column       | Type        | Description            |
+| ------------ | ----------- | ---------------------- |
+| id           | BIGINT (PK) | Order ID               |
+| user\_id     | BIGINT (FK) | Who placed the order   |
+| status       | ENUM        | PENDING, SHIPPED, etc. |
+| total\_price | DECIMAL     | Total amount           |
+| created\_at  | TIMESTAMP   | Order placed time      |
+
+
+Table:-order_items
+
+| Column      | Type        | Description      |
+| ----------- | ----------- | ---------------- |
+| id          | BIGINT (PK) | Row ID           |
+| order\_id   | BIGINT (FK) | Belongs to order |
+| product\_id | BIGINT (FK) | Product bought   |
+| quantity    | INT         | Quantity         |
+| price       | DECIMAL     | Unit price       |
+
+
+ Table: payments
+
+| Column          | Type        | Description                |
+| --------------- | ----------- | -------------------------- |
+| id              | BIGINT (PK) | Payment ID                 |
+| order\_id       | BIGINT (FK) | Linked to an order         |
+| status          | ENUM        | SUCCESS, FAILED, REFUNDED  |
+| gateway         | VARCHAR     | Razorpay, Stripe, etc.     |
+| transaction\_id | VARCHAR     | Reference from payment API |
+
+
+Table: invoices
+
+| Column     | Type        | Description              |
+| ---------- | ----------- | ------------------------ |
+| id         | BIGINT (PK) | Invoice ID               |
+| order\_id  | BIGINT (FK) | Linked to an order       |
+| file\_path | VARCHAR     | PDF path or download URL |
+
+
+ 7. Product Reviews
+
+Table:-reviews
+
+| Column      | Type        | Description            |
+| ----------- | ----------- | ---------------------- |
+| id          | BIGINT (PK) | Review ID              |
+| user\_id    | BIGINT (FK) | Reviewer               |
+| product\_id | BIGINT (FK) | Product being reviewed |
+| rating      | INT         | 1 to 5                 |
+| comment     | TEXT        | Feedback               |												
+
+
+8. Wishlist
+
+ Table: favorites
+
+| Column      | Type        | Description   |
+| ----------- | ----------- | ------------- |
+| id          | BIGINT (PK) |               |
+| user\_id    | BIGINT (FK) | Who favorited |
+| product\_id | BIGINT (FK) | Product liked |
+
+
+9. Blogs & Likes
+
+Table:-blogs
+
+| Column      | Type        | Description  |
+| ----------- | ----------- | ------------ |
+| id          | BIGINT (PK) | Blog post ID |
+| title       | VARCHAR     | Blog title   |
+| content     | TEXT        | Blog content |
+| created\_at | TIMESTAMP   | Date posted  |
+
+
+ Table: blog_favorites
+
+| Column   | Type        | Description |
+| -------- | ----------- | ----------- |
+| id       | BIGINT (PK) |             |
+| user\_id | BIGINT (FK) | Who liked   |
+| blog\_id | BIGINT (FK) | Which blog  |
+   
+
+
+
+
+
+🧠 Summary of Relationships
+1)users → carts, orders, reviews, favorites, blog_favorites
+
+2)products → categories, product_images, tags, cart_items, order_items, favorites, reviews
+
+3)orders → order_items, payments, invoices
+
+4)categories → self-link using parent_id
+
+5)tags ↔ products → joined via product_tags

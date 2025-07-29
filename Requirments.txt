@@ -1,0 +1,42 @@
+1. E-Commerce - BuyTogether
+2. Authentication & Authorization
+3. Product Management -
+	- Add/Edit/Delete products ,
+        - Upload multiple product images,
+	- Manage product categories & subcategories
+	- Manage tags, attributes (size, color, brand)
+	- Set stock quantity, low stock alerts
+	- Enable/disable product visibility
+	- Activate/deactivate user accounts
+	- View user purchase history
+
+4. User 
+	- View user purchase history
+	- List and search products , sorting , filtering 
+	- Profile
+	- Add to cart
+	
+5.Order Management
+	- View all orders (filter by status/date/user)
+	- Change order status (Pending → Packed → Shipped → Delivered → Cancelled) 
+	- View/download invoices
+
+6. Payment & Transaction Monitoring
+	-  View payment history and transaction logs
+	- Mark payment status (success, failed, refunded)
+	- Integrate and monitor payment gateways (Stripe, Razorpay, etc.)
+
+7.Reviews & Feedback Management
+	- Moderate user reviews (approve, delete, flag)
+	- Respond to product reviews
+	- Favorite
+
+8.Blog
+	- Manage blog or announcement posts
+	- Favorite
+
+
+
+
+
+
